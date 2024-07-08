@@ -14,7 +14,7 @@
         <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
             <h1 class="text-3xl font-bold text-center mb-6">Suggestions / Feedback</h1>
             
-            <form id="contact-form" method="POST" action="http://localhost:3000/send">
+            <form id="contact-form" method="POST" action="/send" onsubmit="submitForm(event)">
                 <div class="grid grid-cols-1 gap-4">
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
@@ -50,7 +50,43 @@
             </form>
         </div>
     </div>
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            setTimeout(() => {
+                const isSuccess = Math.random() < 0.8;
 
-    <script src="script.js"></script>
+                if (isSuccess) {
+                    showSuccessToast("Message sent successfully!");
+                    document.getElementById("contact-form").reset(); 
+                } else {
+                    showErrorToast("Failed to send message. Please try again later.");
+                }
+            }, 1000); 
+            
+            function showSuccessToast(message) {
+                Toastify({
+                    text: message,
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                    stopOnFocus: true,
+                }).showToast();
+            }
+
+            // Example toast notification for error
+            function showErrorToast(message) {
+                Toastify({
+                    text: message,
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "linear-gradient(to right, #e3342f, #f56565)",
+                    stopOnFocus: true,
+                }).showToast();
+            }
+        }
+    </script>
 </body>
 </html>

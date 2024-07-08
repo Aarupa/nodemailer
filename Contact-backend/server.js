@@ -1,7 +1,6 @@
 require('dotenv').config({ path: './info.env' });
 
 const express = require('express');
-const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
 const app = express();
@@ -15,9 +14,12 @@ app.use(cors({
     allowedHeaders: ['Content-Type']
 }));
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
+app.get('/' , (req,res)=>{
+    res.sendFile(path.join(__filename + 'index.html'));
+});
 
 app.post('/send', (req, res) => {
     const { name, email, subject, message } = req.body;
